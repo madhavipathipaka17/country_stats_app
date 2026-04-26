@@ -1,0 +1,1 @@
+GET_COUNTRY_STATS = "SELECT * FROM country_stats"
