@@ -9,7 +9,7 @@ df = run_query(GET_COUNTRY_STATS)
 st.title("⚕️ Health & Economic Risk")
 
 # ---------------- CHILD MORTALITY ----------------
-st.subheader("Child Mortality by Country")
+st.subheader("1.Child Mortality by Country")
 
 fig1 = px.bar(
     df.sort_values("child_mort", ascending=False),
@@ -21,7 +21,7 @@ fig1 = px.bar(
 st.plotly_chart(fig1, use_container_width=True)
 
 # ---------------- HEALTH VS MORTALITY ----------------
-st.subheader("Health vs Child Mortality")
+st.subheader("2.Health vs Child Mortality")
 
 fig2 = px.scatter(
     df,
@@ -37,7 +37,7 @@ fig2 = px.scatter(
 st.plotly_chart(fig2, use_container_width=True)
 
 # ---------------- INFLATION ----------------
-st.subheader("Inflation Risk Analysis")
+st.subheader("3.Inflation Risk Analysis")
 
 fig3 = px.box(
     df,
@@ -52,7 +52,7 @@ st.plotly_chart(fig3, use_container_width=True)
 # -------------------------------
 # FERTILITY vs GDP VISUALIZATION
 # -------------------------------
-st.subheader("📊 Fertility vs GDP")
+st.subheader("4.📊 Fertility vs GDP")
 
 fig_fert_gdp = px.scatter(
     df,

@@ -23,7 +23,7 @@ col3.metric("Child Mortality", f"{avg_child_mort:.2f}")
 col4.metric("High-Risk Countries", high_risk)
 
 # ---------------- WORLD MAP ----------------
-st.subheader("🌎 World Map by Segment")
+st.subheader("1.🌎 World Map by Segment")
 
 fig_map = px.choropleth(
     df,
@@ -37,7 +37,7 @@ fig_map = px.choropleth(
 st.plotly_chart(fig_map, use_container_width=True)
 
 # ---------------- SCATTER ----------------
-st.subheader("📊 Income vs Life Expectancy")
+st.subheader("2.📊 Income vs Life Expectancy")
 
 fig_scatter = px.scatter(
     df,

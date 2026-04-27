@@ -57,29 +57,67 @@ df = run_query(query)
 # -------------------------------
 # 1. SEGMENT DISTRIBUTION
 # -------------------------------
-st.subheader("📊 Segment Distribution")
-
-segment_counts = df["segment"].value_counts().reset_index()
-segment_counts.columns = ["segment", "count"]
-
-fig1 = px.pie(
-    segment_counts,
-    names="segment",
+st.subheader("1.Country Segmentation Distribution")
+# Equal weight for visibility
+df["count"] = 1
+# Sunburst Plot
+fig_sunburst = px.sunburst(
+    df,
+    path=["segment", "country"],
     values="count",
     color="segment",
     color_discrete_map=segment_colors,
-    title="Country Distribution by Segment"
+    custom_data=["income", "gdpp", "child_mort", "life_expec"],
     
 )
 
-st.plotly_chart(fig1)
+# Get all labels
+labels = fig_sunburst.data[0]["labels"]
+parents = fig_sunburst.data[0]["parents"]
 
+# Custom hover text
+hover_templates = []
 
+for label, parent in zip(labels, parents):
+    # Segment level (parent is empty)
+    if parent == "":
+        hover_templates.append(
+            "<b>Segment:</b> %{label}<br>" +
+            "<b>Percentage:</b> %{percentRoot}<extra></extra>"
+        )
+    # Country level
+    else:
+        hover_templates.append(
+            "<b>Country:</b> %{label}<br>" +
+            "<b>Income:</b> %{customdata[0]}<br>" +
+            "<b>GDP:</b> %{customdata[1]}<br>" +
+            "<b>Child Mortality:</b> %{customdata[2]}<br>" +
+            "<b>Life Expectancy:</b> %{customdata[3]}<extra></extra>"
+        )
+
+# Apply hover templates
+fig_sunburst.data[0].hovertemplate = hover_templates
+
+# Text inside chart
+fig_sunburst.update_traces(
+    textinfo="label+percent parent",
+    insidetextorientation="radial"
+)
+
+# Layout
+fig_sunburst.update_layout(
+    title_x=0.5,
+    height=450,
+    margin=dict(t=60, l=20, r=20, b=20)
+)
+
+# Display chart
+st.plotly_chart(fig_sunburst, use_container_width=True)
 
 # -------------------------------
 # 2. INCOME BY SEGMENT
 # -------------------------------
-st.subheader("💰 Income by Segment")
+st.subheader("2.💰 Income by Segment")
 
 fig2 = px.box(
     df,
@@ -95,7 +133,7 @@ st.plotly_chart(fig2)
 # -------------------------------
 # 3. GDP BY SEGMENT
 # -------------------------------
-st.subheader("🌍 GDP by Segment")
+st.subheader("3.🌍 GDP by Segment")
 
 fig3 = px.box(
     df,
