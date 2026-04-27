@@ -106,6 +106,7 @@ fig_sunburst.update_traces(
 
 # Layout
 fig_sunburst.update_layout(
+    title_text="",
     title_x=0.5,
     height=450,
     margin=dict(t=60, l=20, r=20, b=20)
@@ -145,3 +146,5 @@ fig3 = px.box(
 )
 
 st.plotly_chart(fig3)
+st.caption("""GDP by Segment reveals which country groups have economic strength versus structural vulnerability.
+It is a key indicator for understanding development inequality, resource allocation, and long-term growth potential.""")
